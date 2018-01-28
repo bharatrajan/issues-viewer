@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-ngRepeat-tracking-production</title>
+  <link href="styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="styles/bootstrap.min.css.map" rel="stylesheet" type="text/css">
+  <link href="styles/ng.issues.viewer.css" rel="stylesheet" type="text/css">
+
+
+  <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
+  <script src="//code.angularjs.org/snapshot/angular-animate.js"></script>
+  <script src="js/scripts.js"></script>
+  <script src="../test/mockPage1.js"></script>
+</head>
+
+<body ng-app="ngGitIssues">
+  <div ng-controller="gitIssuesController">
+
+  <div class="justify-center display-flex padding-30" ng-show="model.isError">
+    Something went wrong. Please try again later
+  </div>
+
+  <!-- TODO: Try using pagination service -->
+  <div class='pagination-container text-center'>
+    <ul class="pagination text-center justify-center display-flex">
+      <li ng-repeat="page in model.pager" ng-click="navigateTo(page)"><a href="#">{{page}}</a></li>
+    </ul>
+  </div>
+
+
+  <div class="justify-center display-flex" ng-show="model.isApiError">
+    Something went wrong
+  </div>
+
+  <div class="issue-container" ng-show="!model.isError">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Number</th>
+          <th>Title</th>
+          <th>User</th>
+          <th>Gravatar</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+
+          <tr ng-repeat="issue in model.issues">
+            <td>{{($index + 1) + (25 * (model.page -1))}}</td>
+            <td>{{issue.number}}</td>
+            <td class='left-align'>{{issue.title}}</td>
+            <td>{{issue.user.login}}</td>
+            <td>
+              <img src={{issue.user.avatar_url}} alt={{issue.user.login}} height="30" width="30"/>
+            </td>
+            <td class='left-align'>{{issue.body.substring(0, 140) + " ..."}}</td>
+          </tr>
+
+        </tbody>
+    </table>
+  </div>
+
+
+</div>
+</body>
+</html>
